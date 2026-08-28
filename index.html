@@ -154,7 +154,7 @@
                     </p>
 <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
 <a href="#order-form" style="display:inline-block; background-color:#1b2b24; color:#ffffff; font-weight:700; padding:16px 32px; border-radius:9999px; text-decoration:none; text-align:center; font-size:16px; cursor:pointer;">
-                            ORDER NOW FOR GH₵800
+                            ORDER NOW FOR GH₵950
                         </a>
 </div>
 </div>
@@ -441,12 +441,12 @@
 </div>
 <div>
 <label class="block font-label-bold text-label-bold text-on-surface-variant mb-2" for="quantity">Quantity *</label>
-<select class="w-full bg-surface-variant/30 border-0 border-b border-primary text-on-surface focus:ring-0 focus:border-secondary transition-colors px-4 py-3 font-body-sm" id="quantity" onchange="document.getElementById('total-btn').innerText = 'CONFIRM MY ORDER GH₵' + (this.value * 800)" required="">
-<option value="1">1 unit - GH₵800</option>
-<option value="2">2 units - GH₵1600</option>
-<option value="3">3 units - GH₵2400</option>
-<option value="4">4 units - GH₵3200</option>
-<option value="5">5 units - GH₵4000</option>
+<select class="w-full bg-surface-variant/30 border-0 border-b border-primary text-on-surface focus:ring-0 focus:border-secondary transition-colors px-4 py-3 font-body-sm" id="quantity" onchange="document.getElementById('total-btn').innerText = 'CONFIRM MY ORDER GH₵' + (this.value * 950)" required="">
+<option value="1">1 unit - GH₵950</option>
+<option value="2">2 units - GH₵1900</option>
+<option value="3">3 units - GH₵2850</option>
+<option value="4">4 units - GH₵3800</option>
+<option value="5">5 units - GH₵4750</option>
 </select>
 </div>
 <div class="bg-error-container/30 border-l-4 border-error p-4 rounded-r-sm">
@@ -456,7 +456,7 @@
                         </p>
 </div>
 <button id="total-btn" type="submit" style="width:100%; background-color:#1b2b24; color:#ffffff; font-weight:700; padding:20px 32px; border-radius:9999px; border:none; font-size:16px; cursor:pointer;">
-                        CONFIRM MY ORDER GH₵800
+                        CONFIRM MY ORDER GH₵950
                     </button>
 </form>
 </div>
@@ -476,7 +476,7 @@
 <!-- STICKY MOBILE BAR -->
 <div id="sticky-bar" class="fixed bottom-0 left-0 w-full bg-surface-container-lowest shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-4 flex items-center justify-between z-50 md:hidden transition-transform duration-300 transform translate-y-0">
     <div class="font-headline-md text-[18px] text-primary font-bold">
-        Foot Massager<br><span class="text-secondary text-[16px]">GH₵800</span>
+        Foot Massager<br><span class="text-secondary text-[16px]">GH₵950</span>
     </div>
     <a href="#order-form" style="display:inline-block; background-color:#1b2b24; color:#ffffff; font-weight:700; padding:16px 32px; border-radius:9999px; text-decoration:none; text-align:center; font-size:16px; cursor:pointer;" class="text-sm">
         ORDER NOW
@@ -525,7 +525,7 @@
             btn.disabled = true;
 
             const quantity = document.getElementById('quantity').value;
-            const price = quantity * 800;
+            const price = quantity * 950;
 
             const formData = new FormData();
             formData.append('Timestamp', new Date().toISOString());
@@ -537,7 +537,7 @@
             formData.append('Quantity', quantity);
             formData.append('Total Price', 'GH₵' + price);
             formData.append('product', 'Foot Massager');
-            formData.append('totalPrice', 'GH₵' + (document.getElementById('quantity').value * 800));
+            formData.append('totalPrice', 'GH₵' + (document.getElementById('quantity').value * 950));
 
             fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: formData })
                 .then(() => {
@@ -545,17 +545,17 @@
                         fbq('track', 'Lead', {
                             content_name: 'Foot Massager',
                             currency: 'GHS',
-                            value: quantity * 800,
+                            value: quantity * 950,
                             quantity: parseInt(quantity),
                             full_name: formData.get('Full Name'),
                             phone_number: formData.get('Phone Number'),
                             region: formData.get('Region')
                         });
                     }
-                    btn.innerText = 'CONFIRM MY ORDER GH₵800';
+                    btn.innerText = 'CONFIRM MY ORDER GH₵950';
                     btn.disabled = false;
                     form.reset();
-                    document.getElementById('total-btn').innerText = 'CONFIRM MY ORDER GH₵800';
+                    document.getElementById('total-btn').innerText = 'CONFIRM MY ORDER GH₵950';
                     const successMsg = document.createElement('div');
                     successMsg.style.cssText = 'background: #1b2b24; color: #ffffff; padding:20px 24px; border-radius:16px; text-align:center; font-weight:600; font-size:16px; margin-top:16px;';
                     successMsg.innerHTML = '✅ Order Received! We will call you to confirm before the rider comes.';
@@ -563,7 +563,7 @@
                     setTimeout(() => successMsg.remove(), 8000);
                 })
                 .catch(() => {
-                    btn.innerText = 'CONFIRM MY ORDER GH₵800';
+                    btn.innerText = 'CONFIRM MY ORDER GH₵950';
                     btn.disabled = false;
                 });
         });
@@ -576,7 +576,7 @@
         return qtySelect ? parseInt(qtySelect.value) : 1;
     }
     function getOrderValue() {
-        return getOrderQty() * 800;
+        return getOrderQty() * 950;
     }
 
     // ViewContent
@@ -585,7 +585,7 @@
             content_name: 'Foot Massager',
             content_type: 'product',
             currency: 'GHS',
-            value: 800
+            value: 950
         });
     });
 
