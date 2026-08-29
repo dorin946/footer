@@ -409,8 +409,8 @@
 <input class="w-full bg-surface-variant/30 border-0 border-b border-primary text-on-surface focus:ring-0 focus:border-secondary transition-colors px-4 py-3 font-body-sm" id="phone" required="" type="tel"/>
 </div>
 <div>
-<label class="block font-label-bold text-label-bold text-on-surface-variant mb-2" for="phone2">2nd Phone (Optional)</label>
-<input class="w-full bg-surface-variant/30 border-0 border-b border-primary text-on-surface focus:ring-0 focus:border-secondary transition-colors px-4 py-3 font-body-sm" id="phone2" type="tel"/>
+<label class="block font-label-bold text-label-bold text-on-surface-variant mb-2" for="phone2">2nd Phone Number *</label>
+<input class="w-full bg-surface-variant/30 border-0 border-b border-primary text-on-surface focus:ring-0 focus:border-secondary transition-colors px-4 py-3 font-body-sm" id="phone2" required="" type="tel"/>
 </div>
 <div>
 <label class="block font-label-bold text-label-bold text-on-surface-variant mb-2" for="region">Region *</label>
@@ -461,6 +461,46 @@
 </form>
 </div>
 </section>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmationModal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modalBackdrop"></div>
+    <div class="relative bg-surface-container-lowest rounded-[2rem] p-8 max-w-md w-[90%] ambient-shadow mx-auto">
+        <div class="flex flex-col items-center text-center">
+            <div class="w-16 h-16 bg-primary-container text-on-primary rounded-full flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-[32px]">check</span>
+            </div>
+            <h3 class="font-headline-md text-[28px] text-primary mb-6">Almost Done!</h3>
+            <div class="text-left w-full space-y-3 mb-6 font-body-sm text-on-surface-variant">
+                <p class="font-semibold mb-4 text-[15px]">By placing this order you confirm that:</p>
+                <ul class="space-y-3">
+                    <li class="flex items-start gap-3"><span class="text-secondary text-lg leading-none">✅</span> <span>You are ready to receive your order</span></li>
+                    <li class="flex items-start gap-3"><span class="text-secondary text-lg leading-none">✅</span> <span>You will be available to receive delivery within 24 to 48 hours</span></li>
+                    <li class="flex items-start gap-3"><span class="text-secondary text-lg leading-none">✅</span> <span>You understand that we will call to confirm before dispatch</span></li>
+                    <li class="flex items-start gap-3"><span class="text-secondary text-lg leading-none">✅</span> <span>Your delivery address and phone number are correct</span></li>
+                </ul>
+            </div>
+            
+            <div class="w-full mb-8">
+                <label class="flex items-start gap-3 cursor-pointer p-4 rounded-xl bg-surface-variant/30 hover:bg-surface-variant/50 transition-colors border border-outline-variant/30">
+                    <input type="checkbox" id="confirmCheckbox" class="mt-1 w-5 h-5 text-secondary border-primary rounded focus:ring-secondary cursor-pointer bg-surface-container-lowest">
+                    <span class="text-left font-body-sm text-on-surface font-semibold leading-snug">Yes I confirm I am available and ready to receive my order within 24 to 48 hours</span>
+                </label>
+                <p id="checkboxError" class="text-error text-[13px] font-semibold mt-2 hidden text-left flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">error</span> Please confirm you are available to receive delivery</p>
+            </div>
+
+            <div class="flex flex-col w-full gap-3">
+                <button type="button" id="confirmOrderBtn" class="w-full bg-primary text-on-primary font-bold py-4 rounded-full transition-transform duration-300 hover:scale-[1.02] active:scale-95 text-[15px]">
+                    Confirm My Order
+                </button>
+                <button type="button" id="goBackBtn" class="w-full bg-transparent border-2 border-outline-variant text-on-surface-variant font-bold py-3.5 rounded-full hover:bg-surface-variant/30 transition-colors text-[15px]">
+                    Go Back
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </main>
 <!-- Footer -->
 <footer class="bg-primary dark:bg-tertiary-container full-width">
@@ -509,10 +549,41 @@
     const form = document.getElementById('orderForm');
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwvu-K0UCC5Pbqh9MHETIhrkUaG7dGV2EFnIIBAdB_6-v8gculuxlCupe62t-H94n_Anw/exec';
 
+    const confirmationModal = document.getElementById('confirmationModal');
+    const goBackBtn = document.getElementById('goBackBtn');
+    const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+    const confirmCheckbox = document.getElementById('confirmCheckbox');
+    const checkboxError = document.getElementById('checkboxError');
+
     if(form) {
         form.addEventListener('submit', e => {
             e.preventDefault();
             
+            confirmationModal.classList.remove('hidden');
+            confirmationModal.classList.add('flex');
+            confirmCheckbox.checked = false;
+            checkboxError.classList.add('hidden');
+        });
+
+        goBackBtn.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+            confirmationModal.classList.remove('flex');
+        });
+
+        confirmOrderBtn.addEventListener('click', () => {
+            if (!confirmCheckbox.checked) {
+                checkboxError.classList.remove('hidden');
+                return;
+            }
+            
+            checkboxError.classList.add('hidden');
+            confirmationModal.classList.add('hidden');
+            confirmationModal.classList.remove('flex');
+            
+            submitOrderForm();
+        });
+
+        function submitOrderForm() {
             // If the URL is just a placeholder, alert the user and return
             if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
                 alert('Please connect your Google Apps Script URL to submit the form.');
@@ -566,7 +637,7 @@
                     btn.innerText = 'CONFIRM MY ORDER GH₵950';
                     btn.disabled = false;
                 });
-        });
+        }
     }
 </script>
 <script>
